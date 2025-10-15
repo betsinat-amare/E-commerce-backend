@@ -1,10 +1,6 @@
 import express from 'express';
 import { register, login } from '../controllers/authController.js';
-import auth from './middleware/auth.js';
-app.get('/api/private', auth, (req, res) => {
-  res.send('This is a protected route');
-});
-
+import auth from '../middleware/auth.js';
 
 const router = express.Router();
 

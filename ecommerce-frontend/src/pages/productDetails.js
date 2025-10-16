@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import API from '../utils/api';
 
 function ProductDetails() {
-  const { id } = useParams(); // Get product ID from URL
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -22,6 +23,15 @@ function ProductDetails() {
     fetchProduct();
   }, [id]);
 
+  const handleAddToCart = async () => {
+    try {
+      await API.post('/cart', { productId: product._id, quantity: 1 });
+      setMessage('Added to cart!');
+    } catch (err) {
+      setMessage('Failed to add to cart');
+    }
+  };
+
   if (loading) return <p>Loading product...</p>;
   if (error) return <p>{error}</p>;
   if (!product) return <p>Product not found.</p>;
@@ -33,7 +43,8 @@ function ProductDetails() {
       <p>{product.description}</p>
       <p><strong>Price: ${product.price.toFixed(2)}</strong></p>
       <p>Stock: {product.stock}</p>
-      {/* Add to Cart button will be added in the next step */}
+      <button onClick={handleAddToCart}>Add to Cart</button>
+      <p>{message}</p>
     </div>
   );
 }

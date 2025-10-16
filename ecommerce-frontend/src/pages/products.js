@@ -34,6 +34,7 @@ function Products() {
             <h3>{product.name}</h3>
             <p>{product.description}</p>
             <p><strong>${product.price.toFixed(2)}</strong></p>
+            {/* This is the important line: */}
             <Link to={`/products/${product._id}`}>View Details</Link>
           </div>
         ))}

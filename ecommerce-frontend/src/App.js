@@ -4,7 +4,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Products from './pages/products';
 import ProductDetails from './pages/productDetails';
-import cart from './pages/cart';
+import Cart from './pages/cart';
+
 function App() {
   return (
     <>

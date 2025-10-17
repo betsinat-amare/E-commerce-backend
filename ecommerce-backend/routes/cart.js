@@ -1,7 +1,7 @@
 import express from 'express';
 import Cart from '../models/cart.js';
 import Product from '../models/product.js';
-import { authMiddleware } from '../middleware/auth.js'; // If you have authentication
+import { authMiddleware } from '../middleware/auth.js'; 
 
 const router = express.Router();
 

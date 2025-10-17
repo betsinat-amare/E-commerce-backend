@@ -6,19 +6,26 @@ function Cart() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const res = await API.get('/cart');
-        setCart(res.data.items || []);
-      } catch (err) {
-        setError('Failed to fetch cart');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCart();
-  }, []);
+useEffect(() => {
+  const fetchCart = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('You must be logged in to view your cart.');
+      setLoading(false);
+      return;
+    }
+    try {
+      const res = await API.get('/cart');
+      setCart(res.data.items || []);
+    } catch (err) {
+      setError('Failed to fetch cart');
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchCart();
+}, []);
+
 
   if (loading) return <p>Loading cart...</p>;
   if (error) return <p>{error}</p>;

@@ -20,4 +20,7 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-export default mongoose.model('User', userSchema);
+// Fix for OverwriteModelError:
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+
+export default User;

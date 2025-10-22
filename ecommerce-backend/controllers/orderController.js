@@ -2,6 +2,7 @@ import Order from '../models/order.js';
 import User from '../models/User.js';
 import Product from '../models/product.js';
 
+
 export const createOrder = async (req, res) => {
   const user = await User.findById(req.user.userId).populate('cart.product');
   if (!user.cart.length) return res.status(400).json({ message: 'Cart is empty' });
@@ -13,12 +14,16 @@ export const createOrder = async (req, res) => {
     item.product.save();
   });
 
+  const { shipping, paymentStatus } = req.body; // Accept from frontend
+
   const order = new Order({
     user: user._id,
     products: user.cart.map(item => ({
       product: item.product._id,
       quantity: item.quantity
     })),
+    shipping, // Save shipping info
+    paymentStatus: paymentStatus || 'Pending',
     total
   });
   await order.save();

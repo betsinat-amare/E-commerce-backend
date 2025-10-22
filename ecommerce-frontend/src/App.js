@@ -6,6 +6,7 @@ import Products from './pages/products';
 import ProductDetails from './pages/productDetails';
 import Cart from './pages/cart';
 import Profile from './pages/Profile';
+import OrderHistory from './pages/OrderHistory';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <NavLink to="/signup" style={({ isActive }) => ({ marginRight: '1rem', fontWeight: isActive ? 'bold' : 'normal' })}>Sign Up</NavLink>
         <NavLink to="/login" style={({ isActive }) => ({ marginRight: '1rem', fontWeight: isActive ? 'bold' : 'normal' })}>Log In</NavLink>
         <NavLink to="/profile" style={({ isActive }) => ({ marginRight: '1rem', fontWeight: isActive ? 'bold' : 'normal' })}>Profile</NavLink>
+        <NavLink to="/orderHistory" style={({ isActive }) => ({ marginRight: '1rem', fontWeight: isActive ? 'bold' : 'normal' })}>OrderHistory</NavLink>
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -26,7 +28,9 @@ function App() {
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/orders" element={<OrderHistory />} />
       </Routes>
+      
     </>
   );
 }

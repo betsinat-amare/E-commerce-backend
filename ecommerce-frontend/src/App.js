@@ -5,6 +5,7 @@ import Signup from './pages/Signup';
 import Products from './pages/products';
 import ProductDetails from './pages/productDetails';
 import Cart from './pages/cart';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <NavLink to="/cart" style={({ isActive }) => ({ marginRight: '1rem', fontWeight: isActive ? 'bold' : 'normal' })}>Cart</NavLink>
         <NavLink to="/signup" style={({ isActive }) => ({ marginRight: '1rem', fontWeight: isActive ? 'bold' : 'normal' })}>Sign Up</NavLink>
         <NavLink to="/login" style={({ isActive }) => ({ marginRight: '1rem', fontWeight: isActive ? 'bold' : 'normal' })}>Log In</NavLink>
+        <NavLink to="/profile" style={({ isActive }) => ({ marginRight: '1rem', fontWeight: isActive ? 'bold' : 'normal' })}>Profile</NavLink>
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -23,6 +25,7 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );

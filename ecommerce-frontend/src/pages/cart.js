@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useCartState, useCartDispatch } from '../context/CartContext';
 import { removeItem, updateItemQuantity } from '../utils/cartActions';
-
+import { useNavigate } from 'react-router-dom';
 
 function Cart() {
   const { items, loading, error } = useCartState();
   const dispatch = useCartDispatch();
   const [updatingProductIds, setUpdatingProductIds] = useState([]);
+  const navigate = useNavigate();
 
   const handleUpdateQuantity = async (productId, newQuantity) => {
     setUpdatingProductIds(ids => [...ids, productId]);
@@ -86,7 +87,6 @@ function Cart() {
                     Remove
                   </button>
                 </div>
-
                 {isUpdating && <small>Updating...</small>}
               </div>
             </li>
@@ -97,6 +97,26 @@ function Cart() {
       <p style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>
         Total: ${total.toFixed(2)}
       </p>
+
+      {items.length > 0 && (
+        <button
+          style={{
+            display: 'block',
+            width: '100%',
+            background: '#222',
+            color: '#fff',
+            fontSize: '1.1rem',
+            padding: '0.75rem',
+            marginTop: '1rem',
+            borderRadius: '6px',
+            border: 'none',
+            cursor: 'pointer'
+          }}
+          onClick={() => navigate('/checkout')}
+        >
+          Order Now / Checkout
+        </button>
+      )}
     </div>
   );
 }

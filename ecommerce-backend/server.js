@@ -7,7 +7,7 @@ import productRoutes from './routes/products.js';
 import cartRoutes from './routes/cart.js';
 import orderRoutes from './routes/orders.js';
 import stripeRoutes from './routes/stripe.js';
-
+import usersRoutes from './routes/users.js';
 
 
 dotenv.config();
@@ -21,7 +21,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
-
+app.use('/api/users', usersRoutes);
 app.use('/api/stripe', stripeRoutes);
 
 app.get('/', (req, res) => {

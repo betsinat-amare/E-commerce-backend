@@ -1,3 +1,4 @@
+// src/pages/Checkout.js
 import React, { useState } from 'react';
 import { useCartState } from '../context/CartContext';
 import API from '../utils/api';
@@ -10,18 +11,17 @@ function Checkout() {
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleCheckout = async e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Call backend to create Stripe session
-      const res = await API.post('/stripe/create-checkout-session', {
-        items,
-        shipping: form
+      await API.post('/orders', {
+        shipping: form,
+        paymentStatus: 'Paid' // use real payment status after integrating Stripe
       });
-      window.location.href = res.data.url; // Redirect to Stripe Checkout
-    } catch (err) {
-      setMessage('Payment failed.');
+      setMessage('Order placed successfully!');
+    } catch {
+      setMessage('Order failed.');
     }
     setLoading(false);
   };
@@ -29,13 +29,15 @@ function Checkout() {
   return (
     <div>
       <h2>Checkout</h2>
-      <form onSubmit={handleCheckout}>
-        <input name="name" placeholder="Full Name" value={form.name} onChange={handleChange} required /> <br />
-        <input name="address" placeholder="Street Address" value={form.address} onChange={handleChange} required /> <br />
-        <input name="city" placeholder="City" value={form.city} onChange={handleChange} required /> <br />
-        <input name="zip" placeholder="Zip Code" value={form.zip} onChange={handleChange} required /> <br />
-        <input name="country" placeholder="Country" value={form.country} onChange={handleChange} required /> <br />
-        <button type="submit" disabled={loading}>Pay with Card</button>
+      <form onSubmit={handleSubmit}>
+        <input name="name" placeholder="Full Name" value={form.name} onChange={handleChange} required /><br/>
+        <input name="address" placeholder="Address" value={form.address} onChange={handleChange} required /><br/>
+        <input name="city" placeholder="City" value={form.city} onChange={handleChange} required /><br/>
+        <input name="zip" placeholder="Zip Code" value={form.zip} onChange={handleChange} required /><br/>
+        <input name="country" placeholder="Country" value={form.country} onChange={handleChange} required /><br/>
+        <button type="submit" disabled={loading}>
+          Pay & Place Order
+        </button>
       </form>
       <p>{message}</p>
     </div>

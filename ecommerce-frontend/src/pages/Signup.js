@@ -17,15 +17,16 @@ function Signup() {
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="max-w-md mx-auto mt-16 p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Sign Up</h2>
+      <form onSubmit={handleSubmit} className="space-y-5">
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
+          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <input
           type="password"
@@ -33,10 +34,24 @@ function Signup() {
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
+          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
-        <button type="submit">Sign Up</button>
+        <button
+          type="submit"
+          className="w-full bg-indigo-600 text-white py-3 rounded-md font-semibold hover:bg-indigo-700 transition-colors"
+        >
+          Sign Up
+        </button>
       </form>
-      <p>{message}</p>
+      {message && (
+        <p
+          className={`mt-4 text-center text-sm ${
+            message.includes('successful') ? 'text-green-600' : 'text-red-600'
+          }`}
+        >
+          {message}
+        </p>
+      )}
     </div>
   );
 }

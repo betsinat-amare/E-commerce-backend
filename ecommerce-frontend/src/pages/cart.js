@@ -23,57 +23,68 @@ function Cart() {
     }
   };
 
-  if (loading) return <p>Loading cart...</p>;
-  if (error) return <p role="alert" style={{ color: 'red' }}>{error}</p>;
+  if (loading)
+    return <p className="text-center text-gray-600 mt-12 text-lg">Loading cart...</p>;
+  if (error)
+    return (
+      <p role="alert" className="text-center text-red-600 mt-12 text-lg">
+        {error}
+      </p>
+    );
   if (!items.length)
     return (
-      <div style={{ textAlign: 'center', padding: '2rem' }}>
-        <p>Your cart is empty.</p>
-        {/* You can add a cart illustration SVG here */}
+      <div className="text-center p-8 text-gray-700">
+        <p className="text-xl font-semibold">Your cart is empty.</p>
+        {/* Consider adding a decorative SVG or image here */}
       </div>
     );
 
   const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
   return (
-    <div style={{ maxWidth: '600px', margin: 'auto' }}>
-      <h2>Your Cart</h2>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+    <div className="max-w-3xl mx-auto p-6">
+      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Your Cart</h2>
+      <ul className="space-y-6">
         {items.map(({ product, quantity }) => {
           const isUpdating = updatingProductIds.includes(product._id);
           return (
-            <li key={product._id} style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center' }}>
+            <li
+              key={product._id}
+              className="flex items-center space-x-4 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+            >
               <img
                 src={product.image}
                 alt={product.name}
-                width={80}
-                height={80}
-                style={{ marginRight: '1rem', objectFit: 'cover', borderRadius: '8px' }}
+                className="w-20 h-20 object-cover rounded-md flex-shrink-0"
               />
-              <div style={{ flexGrow: 1 }}>
-                <strong>{product.name}</strong>
-                <p style={{ margin: '0.25rem 0' }}>${product.price.toFixed(2)}</p>
+              <div className="flex flex-col flex-grow">
+                <strong className="text-lg text-gray-900">{product.name}</strong>
+                <p className="text-gray-600 mt-1">${product.price.toFixed(2)}</p>
 
-                <div>
-                  <label htmlFor={`qty-${product._id}`} style={{ marginRight: '0.5rem' }}>
-                    Quantity:
+                <div className="flex items-center mt-3 space-x-2">
+                  <label htmlFor={`qty-${product._id}`} className="sr-only">
+                    Quantity of {product.name}
                   </label>
                   <button
                     aria-label={`Decrease quantity of ${product.name}`}
                     onClick={() => handleUpdateQuantity(product._id, quantity - 1)}
                     disabled={quantity <= 1 || isUpdating}
-                    style={{ marginRight: '0.5rem' }}
+                    className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50"
                   >
                     –
                   </button>
-                  <span id={`qty-${product._id}`} aria-live="polite" style={{ marginRight: '0.5rem' }}>
+                  <span
+                    id={`qty-${product._id}`}
+                    aria-live="polite"
+                    className="w-8 text-center text-gray-800 font-medium"
+                  >
                     {quantity}
                   </span>
                   <button
                     aria-label={`Increase quantity of ${product.name}`}
                     onClick={() => handleUpdateQuantity(product._id, quantity + 1)}
                     disabled={isUpdating}
-                    style={{ marginRight: '1rem' }}
+                    className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50"
                   >
                     +
                   </button>
@@ -82,37 +93,29 @@ function Cart() {
                     onClick={() => handleRemove(product._id)}
                     disabled={isUpdating}
                     aria-label={`Remove ${product.name} from cart`}
-                    style={{ color: 'red', border: 'none', background: 'transparent', cursor: 'pointer' }}
+                    className="ml-auto text-red-600 hover:text-red-800 disabled:opacity-50 focus:outline-none"
                   >
                     Remove
                   </button>
                 </div>
-                {isUpdating && <small>Updating...</small>}
+
+                {isUpdating && (
+                  <small className="text-gray-500 mt-1">Updating...</small>
+                )}
               </div>
             </li>
           );
         })}
       </ul>
 
-      <p style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>
+      <p className="font-bold text-xl mt-8 text-right text-gray-900">
         Total: ${total.toFixed(2)}
       </p>
 
       {items.length > 0 && (
         <button
-          style={{
-            display: 'block',
-            width: '100%',
-            background: '#222',
-            color: '#fff',
-            fontSize: '1.1rem',
-            padding: '0.75rem',
-            marginTop: '1rem',
-            borderRadius: '6px',
-            border: 'none',
-            cursor: 'pointer'
-          }}
           onClick={() => navigate('/checkout')}
+          className="mt-6 w-full bg-gray-900 text-white py-3 text-lg rounded-md hover:bg-gray-800 transition-colors"
         >
           Order Now / Checkout
         </button>
